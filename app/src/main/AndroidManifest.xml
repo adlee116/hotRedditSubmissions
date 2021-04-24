@@ -9,7 +9,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.HotRedditSubmissions">
-        <activity android:name=".RedditPostListActivity">
+        <activity android:name="com.presentation.redditPostLIstActivity.RedditPostListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
