@@ -11,12 +11,10 @@ import com.presentation.base.BaseActivity
 import com.presentation.utils.safelyObserve
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class RedditPostListActivity : BaseActivity() {
 
     private lateinit var binding: RedditPostListActivityBinding
     private val viewModel: RedditPostListViewModel by viewModel()
-    lateinit var adapter: RedditPostAdapter
     var isLoading: Boolean = false
     private lateinit var layoutManager : LinearLayoutManager
 
@@ -24,22 +22,30 @@ class RedditPostListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = RedditPostListActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setAdapter()
+        savedInstanceState?.let {
+            binding.redditPostList.adapter = viewModel.adapter
+        } ?: run {
+            setAdapter()
+            viewModel.getRedditFirstPagePosts()
+        }
+        setLayoutManager()
         setObservers()
-        viewModel.getRedditFirstPagePosts()
         attachScrollListener()
     }
 
     private fun setAdapter() {
-        adapter = RedditPostAdapter(postClickListeners)
-        layoutManager = LinearLayoutManager(binding.root.context)
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+        viewModel.adapter = RedditPostAdapter(postClickListeners)
+        viewModel.adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 layoutManager.scrollToPositionWithOffset(positionStart, 0)
             }
         })
+        binding.redditPostList.adapter = viewModel.adapter
+    }
+
+    private fun setLayoutManager() {
+        layoutManager = LinearLayoutManager(binding.root.context)
         binding.redditPostList.layoutManager = layoutManager
-        binding.redditPostList.adapter = adapter
     }
 
     private fun attachScrollListener() {
@@ -58,7 +64,7 @@ class RedditPostListActivity : BaseActivity() {
 
     private fun setObservers() {
         viewModel.redditPostsResponse.safelyObserve(lifecycleOwner) {
-            adapter.updateItems(it)
+            viewModel.adapter.updateItems(it)
             isLoading = false
         }
         viewModel.redditPostsFailure.safelyObserve(lifecycleOwner) {

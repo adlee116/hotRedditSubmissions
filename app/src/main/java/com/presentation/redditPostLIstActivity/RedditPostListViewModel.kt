@@ -13,6 +13,7 @@ class RedditPostListViewModel(private val getRedditHotPostsUseCase: GetRedditHot
     var before: String? = null
     var after: String? = null
     var postAmount = 0
+    lateinit var adapter: RedditPostAdapter
 
     private val _redditPostsResponse = MutableLiveData<List<RedditPost>>()
     val redditPostsResponse: LiveData<List<RedditPost>> get() = _redditPostsResponse
