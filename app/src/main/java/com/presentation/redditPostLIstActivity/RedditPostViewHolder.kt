@@ -17,6 +17,7 @@ class RedditPostViewHolder(private val binding: RedditPostCardsBinding): Recycle
         loadImage(post.thumbnail, binding.postThumbnail)
     }
 
+    // TODO, add standard image in the XML or here as a default for when there is no accompanying image
     private fun loadImage(image: String, location: ImageView) {
         Glide.with(binding.root.context)
             .load(image)

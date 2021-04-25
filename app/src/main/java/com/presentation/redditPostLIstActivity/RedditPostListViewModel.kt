@@ -60,7 +60,8 @@ class RedditPostListViewModel(private val getRedditHotPostsUseCase: GetRedditHot
                         redditPostContent.title ?: "",
                         redditPostContent.score ?: "",
                         redditPostContent.thumbnail ?: "",
-                        redditPostContent.author?: ""
+                        redditPostContent.author?: "",
+                        redditPostContent.permalink ?: ""
                     )
                 )
             }

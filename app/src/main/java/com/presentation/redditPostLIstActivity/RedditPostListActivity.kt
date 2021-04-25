@@ -1,5 +1,7 @@
 package com.presentation.redditPostLIstActivity
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +10,7 @@ import com.example.hotredditsubmissions.databinding.RedditPostListActivityBindin
 import com.presentation.base.BaseActivity
 import com.presentation.utils.safelyObserve
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class RedditPostListActivity : BaseActivity() {
 
@@ -65,7 +68,11 @@ class RedditPostListActivity : BaseActivity() {
 
     private val postClickListeners = object : RedditPostViewHolder.PostClickListeners {
         override fun postClicked(redditPost: RedditPost, position: Int) {
-            toast("This would expand the post")
+            // TODO extract this code.
+            val url = "https://www.reddit.com" + redditPost.postUrl
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
         }
     }
 
