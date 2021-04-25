@@ -25,7 +25,7 @@ class RedditPostAdapter(private val onClickListeners: RedditPostViewHolder.PostC
     }
 
     fun updateItems(newItems: List<RedditPost>) {
-        items.clear()
+//        items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
     }

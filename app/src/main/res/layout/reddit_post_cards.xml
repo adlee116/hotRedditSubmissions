@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="wrap_content"
-                                                   android:background="@drawable/card_background"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_marginVertical="4dp"
-                                                   android:layout_marginHorizontal="6dp"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_background"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_marginVertical="4dp"
+        android:layout_marginHorizontal="6dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
             android:id="@+id/rating"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="8dp"
-            app:layout_constraintLeft_toLeftOf="@id/postContent"
-            app:layout_constraintTop_toTopOf="@id/postTitle"
-            app:layout_constraintBottom_toBottomOf="@id/postTitle"
+            app:layout_constraintRight_toRightOf="@id/postTitle"
+            app:layout_constraintTop_toTopOf="@id/author"
+            app:layout_constraintBottom_toBottomOf="@id/author"
+            android:foregroundGravity="right"
             tools:text="1.2k"
             android:textStyle="bold"
             android:textSize="16sp"
             android:textColor="@color/black"/>
+
+    <ImageView
+            android:id="@+id/postThumbnail"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
             android:id="@+id/postTitle"
@@ -35,17 +45,18 @@
             android:paddingEnd="8dp"
             android:maxLength="60"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/rating"
+            app:layout_constraintLeft_toRightOf="@id/postThumbnail"
             app:layout_constraintRight_toRightOf="parent"
             tools:text="I just started Destiny 2, and I have no idea what I'm doing."/>
 
     <TextView
-            android:id="@+id/postContent"
-            android:layout_width="match_parent"
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/postTitle"
             app:layout_constraintTop_toBottomOf="@id/postTitle"
             android:padding="6dp"
-            tools:text="After a long break from gaming, I wanted to get back. So I downloaded destiny 2, started playing. I finished the advent mission and I'm at the tower for the first time ever."/>
+            tools:text="Mr magoo"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
