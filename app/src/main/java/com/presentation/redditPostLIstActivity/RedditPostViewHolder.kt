@@ -12,7 +12,7 @@ class RedditPostViewHolder(private val binding: RedditPostCardsBinding): Recycle
     fun bind(post: RedditPost, clickListener: PostClickListeners, position: Int) {
         binding.root.setOnClickListener { clickListener.postClicked(post, position) }
         binding.postTitle.text = post.title
-        binding.rating.text = "Upvotes: " + intConversion(post.rating.toInt())
+        ("Upvotes: " + intConversion(post.rating.toInt())).also { binding.rating.text = it }
         binding.author.text = post.author
         loadImage(post.thumbnail, binding.postThumbnail)
     }
@@ -29,19 +29,12 @@ class RedditPostViewHolder(private val binding: RedditPostCardsBinding): Recycle
         fun postClicked(redditPost: RedditPost, position: Int)
     }
 
+    // TODO pull out to a util so it can have tests added
     private fun intConversion(number: Int): String {
         return when {
-            abs(number / 1000000) > 1 -> {
-                (number / 1000000).toString() + "m";
-
-            }
-            abs(number / 1000) > 1 -> {
-                (number / 1000).toString() + "k";
-
-            }
-            else -> {
-                number.toString();
-            }
+            abs(number / 1000000) > 1 -> { (number / 1000000).toString() + "m"; }
+            abs(number / 1000) > 1 -> { (number / 1000).toString() + "k"; }
+            else -> { number.toString(); }
         }
     }
 

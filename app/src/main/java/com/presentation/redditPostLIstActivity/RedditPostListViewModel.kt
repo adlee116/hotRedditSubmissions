@@ -12,6 +12,7 @@ class RedditPostListViewModel(private val getRedditHotPostsUseCase: GetRedditHot
 
     var before: String? = null
     var after: String? = null
+    var postAmount = 0
 
     private val _redditPostsResponse = MutableLiveData<List<RedditPost>>()
     val redditPostsResponse: LiveData<List<RedditPost>> get() = _redditPostsResponse
@@ -32,7 +33,9 @@ class RedditPostListViewModel(private val getRedditHotPostsUseCase: GetRedditHot
             result.result(
                 onSuccess = {
                     it.data?.let { postData ->
-                        _redditPostsResponse.value = createUsableModels(postData)
+                        val newPosts = createUsableModels(postData)
+                        postAmount += newPosts.size
+                        _redditPostsResponse.value = newPosts
                         before = postData.before
                         after = postData.after
                     }

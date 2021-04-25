@@ -16,7 +16,6 @@ class RedditPostListActivity : BaseActivity() {
     lateinit var adapter: RedditPostAdapter
     var isLoading: Boolean = false
     private lateinit var layoutManager : LinearLayoutManager
-    var postAmount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,21 +29,22 @@ class RedditPostListActivity : BaseActivity() {
 
     private fun setAdapter() {
         adapter = RedditPostAdapter(postClickListeners)
+        layoutManager = LinearLayoutManager(binding.root.context)
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 layoutManager.scrollToPositionWithOffset(positionStart, 0)
             }
         })
+        binding.redditPostList.layoutManager = layoutManager
         binding.redditPostList.adapter = adapter
     }
 
     private fun attachScrollListener() {
-        layoutManager = LinearLayoutManager(this)
         binding.redditPostList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!isLoading) {
-                    if (layoutManager.findLastCompletelyVisibleItemPosition() == postAmount - 1) {
+                    if (layoutManager.findLastCompletelyVisibleItemPosition() == viewModel.postAmount - 1) {
                         viewModel.getRedditPostsNextPage()
                         isLoading = true
                     }
